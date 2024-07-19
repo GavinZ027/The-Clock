@@ -31,15 +31,24 @@ class FocusTimer:
         # 将输入框对象放置在窗口的下方
         self.entry.pack(side=tk.TOP, pady=10)
 
+        # 创建一个框架对象，用于放置按钮
+        self.button_frame = tk.Frame(self.window)
+        self.button_frame.pack(side=tk.TOP, pady=10)
+
         # 创建一个按钮对象，用于开始专注时钟
-        self.start_button = tk.Button(self.window, text="开始", command=self.start)
-        # 将按钮对象放置在窗口的左下方
-        self.start_button.pack(side=tk.LEFT, padx=20, pady=10)
+        self.start_button = tk.Button(self.button_frame, text="开始", command=self.start)
+        # 将按钮对象放置在框架的左边
+        self.start_button.pack(side=tk.LEFT, padx=10)
 
         # 创建一个按钮对象，用于暂停专注时钟
-        self.pause_button = tk.Button(self.window, text="暂停", command=self.pause)
-        # 将按钮对象放置在窗口的右下方
-        self.pause_button.pack(side=tk.RIGHT, padx=20, pady=10)
+        self.pause_button = tk.Button(self.button_frame, text="暂停", command=self.pause)
+        # 将按钮对象放置在框架的中间
+        self.pause_button.pack(side=tk.LEFT, padx=10)
+        
+        # 创建一个按钮对象，用于继续专注时钟
+        self.resume_button = tk.Button(self.button_frame, text="继续", command=self.resume)
+        # 将按钮对象放置在框架的右边
+        self.resume_button.pack(side=tk.LEFT, padx=10)
 
         # 定义一个布尔变量，用于表示专注时钟是否正在运行
         self.running = False
@@ -87,6 +96,15 @@ class FocusTimer:
             self.running = False
             # 将专注时钟的状态设置为"已暂停"
             self.status = "已暂停"
+    
+    # 定义一个继续方法，用于继续专注时钟
+    def resume(self):
+        # 如果专注时钟没有在运行且还有剩余秒数
+        if not self.running and self.seconds > 0:
+            # 将专注时钟的运行状态设置为True
+            self.running = True
+            # 将专注时钟的状态设置为"专注中"
+            self.status = "专注中"
 
     # 定义一个更新方法，用于更新时间和界面
     def update(self):
